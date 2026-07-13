@@ -1,0 +1,51 @@
+<div class="todos-page">
+
+    <div class="todos-page__header">
+        <h1 class="todos-page__title">My Todo's</h1>
+        <a routerLink="/add" class="todos-page__add-btn">+ Add New</a>
+    </div>
+
+    @if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+    }
+
+    @if (todos().length === 0 && !error()) {
+    <div class="todos-page__empty">
+        <span class="todos-page__empty-icon">📝</span>
+        <h2>No tasks yet!</h2>
+        <p>Create your first task to get started.</p>
+    </div>
+    } @else {
+    <ul class="todos-page__list">
+        @for (todo of todos(); track todo.id) {
+        <li class="todos-page__item" [class.todos-page__item--completed]="todo.is_completed">
+            <div class="todos-page__item-content">
+                <div>
+                    <h3 class="todos-page__item-title">{{ todo.title }}</h3>
+                    @if (todo.description) { <p class="todos-page__item-desc">{{ todo.description }}</p> }
+                </div>
+            </div>
+            <div class="todos-page__item-actions">
+                <a [routerLink]="['/todos', todo.id, 'edit']" class="btn-icon btn-icon--edit">Edit</a>
+                <button (click)="openModal(todo.id)" class="btn-icon btn-icon--delete">Delete</button>
+            </div>
+        </li>
+        }
+    </ul>
+    }
+</div>
+
+@if (isModalOpen()){
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <h2 class="modal-title">Delete Task?</h2>
+        <p class="modal-desc">Are you sure you want to delete this task? This action cannot be undone.</p>
+        @if (error()) { <div class="error-banner error-banner--modal">{{ error() }}</div> }
+        <div class="modal-actions">
+            <button (click)="closeModal()" class="modal-btn modal-btn--cancel">Cancel</button>
+            <button (click)="confirmDelete()" class="modal-btn modal-btn--confirm">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+
+}

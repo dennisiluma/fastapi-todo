@@ -1,0 +1,37 @@
+
+
+<div class="form-page">
+    <div class="form-page__card">
+        <h1 class="form-page__title">Update Todo</h1>
+        <p class="form-page__desc">Edit the details of your task below.</p>
+        
+        @if (error()) { <div class="form-page__error">{{ error() }}</div> }
+
+        <form (ngSubmit)="onSubmit()" class="form-page__form">
+            <div class="form-page__group">
+                <label for="title" class="form-page__label">Task Title *</label>
+                <input id="title" type="text" class="form-page__input" [(ngModel)]="title" name="title" required />
+            </div>
+            <div class="form-page__group">
+                <label for="desc" class="form-page__label">Description</label>
+                <textarea id="desc" class="form-page__textarea" [(ngModel)]="description" name="description"
+                    rows="4"></textarea>
+            </div>
+
+            <div class="form-page__group form-page__group--checkbox">
+                <label class="form-page__checkbox-label">
+                    <input type="checkbox" [(ngModel)]="isCompleted" name="isCompleted" class="form-page__checkbox" />
+                    <span>Mark as completed</span>
+                </label>
+            </div>
+
+            <div class="form-page__actions">
+                <button type="button" (click)="cancelEditTodo()"
+                    class="form-page__btn form-page__btn--secondary">Cancel</button>
+                <button type="submit" [disabled]="isSubmitting()" class="form-page__btn form-page__btn--primary">
+                    {{ isSubmitting() ? 'Saving...' : 'Save Changes' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

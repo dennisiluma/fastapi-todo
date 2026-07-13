@@ -1,0 +1,30 @@
+<header class="site-nav" [class.site-nav--open]="isMenuOpen()">
+
+    <div class="site-nav__container">
+
+
+        <a routerLink="/" class="site-nav__logo" (click)="closeMenu()">
+            <span class="site-nav__logo-icon">✓</span>
+            <span class="site-nav__logo-text">TaskFlow</span>
+        </a>
+
+        <nav class="site-nav__menu">
+            <a routerLink="/" class="site-nav__link" (click)="closeMenu()">Home</a>
+            <a routerLink="/todos" class="site-nav__link" (click)="closeMenu()">Todo's</a>
+            <a routerLink="/add" class="site-nav__link site-nav__link--cta" (click)="closeMenu()">Add Todo</a>
+        </nav>
+
+
+        <button class="site-nav__hamburger" (click)="toggleMenu()" aria-label="Toggle menu">
+            <span class="site-nav__hamburger-bar"></span>
+            <span class="site-nav__hamburger-bar"></span>
+            <span class="site-nav__hamburger-bar"></span>
+        </button>
+
+    </div>
+
+    @if (isMenuOpen()) {
+    <div class="site-nav__overlay" (click)="closeMenu()"></div>
+    }
+
+</header>
